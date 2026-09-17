@@ -1,0 +1,81 @@
+{% assign selected_blog = blogs[section.settings.blog] %}
+{% assign article_limit = section.settings.posts_to_show %}
+
+{% if section.settings.show_section == false %}{% else %}
+<section id="journal" class="section-journal">
+  <div class="section-journal__header">
+    <div>
+      <p class="eyebrow">{{ section.settings.eyebrow | default: 'FROM THE LOAM JOURNAL' }}</p>
+      <h2 class="section-journal__heading">{{ section.settings.heading | default: 'Trail notes' }}</h2>
+    </div>
+    <a href="{{ selected_blog.url | default: routes.root_url }}" style="font-family:var(--font-narrow);font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:.18em;color:#0A0A0A;text-decoration:none">
+      ALL ARTICLES →
+    </a>
+  </div>
+
+  <div class="section-journal__grid">
+    {% if selected_blog != blank and selected_blog.articles_count > 0 %}
+      {% for article in selected_blog.articles limit: article_limit %}
+        <a href="{{ article.url }}" class="article-card">
+          <div class="article-card__image">
+            {% if article.image %}
+              <img src="{{ article.image | image_url: width: 800 }}" alt="{{ article.image.alt | default: article.title | escape }}" loading="lazy" width="800" height="600">
+            {% else %}
+              JOURNAL · IMAGE
+            {% endif %}
+          </div>
+          {% if article.tags.size > 0 %}
+            <div class="article-card__tag">{{ article.tags.first | upcase }}</div>
+          {% endif %}
+          <h3 class="article-card__title">{{ article.title }}</h3>
+          <div class="article-card__meta">{{ article.published_at | date: '%B %Y' }}</div>
+        </a>
+      {% endfor %}
+    {% else %}
+      <div class="article-card">
+        <div class="article-card__image">JOURNAL · IMAGE</div>
+        <div class="article-card__tag">GUIDE</div>
+        <h3 class="article-card__title">How to choose the right MTB kit</h3>
+        <div class="article-card__meta">April 2026</div>
+      </div>
+      <div class="article-card">
+        <div class="article-card__image">JOURNAL · IMAGE</div>
+        <div class="article-card__tag">KIT LIST</div>
+        <h3 class="article-card__title">Top 5 must-have pieces for trail riders</h3>
+        <div class="article-card__meta">March 2026</div>
+      </div>
+      <div class="article-card">
+        <div class="article-card__image">JOURNAL · IMAGE</div>
+        <div class="article-card__tag">FABRIC</div>
+        <h3 class="article-card__title">Why breathable fabrics actually matter</h3>
+        <div class="article-card__meta">March 2026</div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Journal",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show journal section",
+      "default": true,
+      "info": "Uncheck to hide this section until you have enough blog posts."
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FROM THE LOAM JOURNAL" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Trail notes" },
+    { "type": "blog", "id": "blog", "label": "Blog" },
+    {
+      "type": "range",
+      "id": "posts_to_show",
+      "label": "Posts to show",
+      "min": 1, "max": 6, "step": 1, "default": 3
+    }
+  ],
+  "presets": [{ "name": "Journal" }]
+}
+{% endschema %}

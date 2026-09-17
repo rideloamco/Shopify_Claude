@@ -1,0 +1,97 @@
+{%- assign header_logo = section.settings.logo_light | default: settings.logo_on_light -%}
+{%- assign header_logo_w = section.settings.logo_width | default: settings.logo_width | default: 64 -%}
+<header class="site-header" role="banner">
+  <a href="{{ routes.root_url }}" class="site-header__logo" aria-label="{{ shop.name }}">
+    {%- if header_logo != blank -%}
+      <img src="{{ header_logo | image_url: width: 320 }}" alt="{{ shop.name | escape }}" style="width:{{ header_logo_w }}px;height:auto;display:block">
+    {%- else -%}
+      LOAM<span>CO.</span>
+    {%- endif -%}
+  </a>
+
+  <nav class="site-header__nav" aria-label="Main navigation">
+    {% assign nav = linklists[section.settings.menu] %}
+    {% if nav.links.size > 0 %}
+      {% for link in nav.links %}
+        <a href="{{ link.url }}"{% if link.active %} class="active" aria-current="page"{% endif %}>{{ link.title }}</a>
+      {% endfor %}
+    {% else %}
+      <a href="{{ routes.collections_url }}">Shop</a>
+      <a href="{{ routes.root_url }}pages/about">About</a>
+      <a href="{{ routes.root_url }}pages/why-loam">Why Loam</a>
+      <a href="{{ routes.root_url }}blogs/blog">Blog</a>
+      <a href="{{ routes.root_url }}pages/ambassadors">Ambassadors</a>
+    {% endif %}
+  </nav>
+
+  <div class="site-header__actions">
+    <a href="{{ routes.search_url }}" class="site-header__icon-btn" aria-label="Search">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    </a>
+    <a href="{{ routes.account_url }}" class="site-header__icon-btn" aria-label="Account">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </a>
+    <button class="site-header__icon-btn" data-action="open-cart" aria-label="Open cart">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span class="cart-count" aria-hidden="true"{% if cart.item_count == 0 %} style="display:none"{% endif %}>{{ cart.item_count }}</span>
+    </button>
+    <button class="site-header__hamburger" data-action="open-nav" aria-label="Open navigation" aria-expanded="false">
+      <svg width="22" height="16" viewBox="0 0 22 16" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M0 1h22M0 8h22M0 15h22"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+
+<nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+  <div class="mobile-nav__header">
+    {%- assign mnav_logo = section.settings.logo_dark | default: settings.logo_on_dark -%}
+    <a href="{{ routes.root_url }}" class="mobile-nav__logo" aria-label="{{ shop.name }}">
+      {%- if mnav_logo != blank -%}
+        <img src="{{ mnav_logo | image_url: width: 240 }}" alt="{{ shop.name | escape }}" style="width:56px;height:auto;display:block">
+      {%- else -%}
+        LOAM<small>CO.</small>
+      {%- endif -%}
+    </a>
+    <button class="mobile-nav__close" data-action="close-nav" aria-label="Close navigation">✕</button>
+  </div>
+  <div class="mobile-nav__links">
+    {% assign nav = linklists[section.settings.menu] %}
+    {% if nav.links.size > 0 %}
+      {% for link in nav.links %}
+        <a href="{{ link.url }}"{% if link.active %} class="active"{% endif %}>{{ link.title }}</a>
+      {% endfor %}
+    {% else %}
+      <a href="{{ routes.collections_url }}">Shop</a>
+      <a href="{{ routes.root_url }}pages/about">About</a>
+      <a href="{{ routes.root_url }}pages/why-loam">Why Loam</a>
+      <a href="{{ routes.root_url }}blogs/blog">Blog</a>
+      <a href="{{ routes.root_url }}pages/ambassadors">Ambassadors</a>
+    {% endif %}
+  </div>
+  <div class="mobile-nav__footer">
+    <a href="{{ routes.search_url }}" class="mobile-nav__footer-link">Search</a>
+    <a href="{{ routes.account_url }}" class="mobile-nav__footer-link">Account</a>
+  </div>
+</nav>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "header", "content": "Logo" },
+    { "type": "image_picker", "id": "logo_light", "label": "Logo — BLACK version", "info": "Shown in the header (light background). Leave blank to use the LOAM CO. text." },
+    { "type": "image_picker", "id": "logo_dark", "label": "Logo — LIME version", "info": "Shown in the mobile menu (dark background)." },
+    { "type": "range", "id": "logo_width", "label": "Header logo width", "min": 40, "max": 140, "step": 4, "default": 64, "unit": "px" },
+    { "type": "header", "content": "Navigation" },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

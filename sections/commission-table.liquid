@@ -1,0 +1,81 @@
+<section class="section-commission">
+  <p class="eyebrow eyebrow--dark">{{ section.settings.eyebrow | default: 'COMMISSION TIERS' }}</p>
+  <h2 class="section-commission__heading">{{ section.settings.heading | default: 'The more you push, the more you earn.' }}</h2>
+
+  <div class="commission-table" role="table" aria-label="Ambassador commission tiers">
+    <div class="commission-table__head" role="row">
+      <div class="commission-table__head-cell" role="columnheader">TIER</div>
+      <div class="commission-table__head-cell" role="columnheader">QUARTERLY SALES</div>
+      <div class="commission-table__head-cell" role="columnheader">YOUR CUT</div>
+      <div class="commission-table__head-cell" role="columnheader">AUDIENCE DISCOUNT</div>
+      <div class="commission-table__head-cell" role="columnheader">PERKS</div>
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'tier' -%}
+        <div class="commission-table__row" role="row" {{ block.shopify_attributes }}>
+          <div class="commission-table__cell commission-table__tier-name" role="cell">{{ block.settings.name }}</div>
+          <div class="commission-table__cell" role="cell"><code>{{ block.settings.sales_range }}</code></div>
+          <div class="commission-table__cell" role="cell">
+            <span class="commission-badge">{{ block.settings.commission }}</span>
+          </div>
+          <div class="commission-table__cell" role="cell"><code>{{ block.settings.audience_discount }}</code></div>
+          <div class="commission-table__cell" role="cell">{{ block.settings.perks }}</div>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <div class="commission-table__row" role="row">
+        <div class="commission-table__cell commission-table__tier-name" role="cell">ROOTS</div>
+        <div class="commission-table__cell" role="cell"><code>£0 – £999</code></div>
+        <div class="commission-table__cell" role="cell"><span class="commission-badge">15%</span></div>
+        <div class="commission-table__cell" role="cell"><code>10%</code></div>
+        <div class="commission-table__cell" role="cell">Welcome tee · Tracking dashboard · Monthly payouts</div>
+      </div>
+      <div class="commission-table__row" role="row">
+        <div class="commission-table__cell commission-table__tier-name" role="cell">BERMS</div>
+        <div class="commission-table__cell" role="cell"><code>£1,000 – £4,999</code></div>
+        <div class="commission-table__cell" role="cell"><span class="commission-badge">18%</span></div>
+        <div class="commission-table__cell" role="cell"><code>12%</code></div>
+        <div class="commission-table__cell" role="cell">Free seasonal kit · Priority support · Featured on socials</div>
+      </div>
+      <div class="commission-table__row" role="row">
+        <div class="commission-table__cell commission-table__tier-name" role="cell">DESCENT</div>
+        <div class="commission-table__cell" role="cell"><code>£5,000+</code></div>
+        <div class="commission-table__cell" role="cell"><span class="commission-badge">22%</span></div>
+        <div class="commission-table__cell" role="cell"><code>15%</code></div>
+        <div class="commission-table__cell" role="cell">Full kit drops · Co-branded product input · Trip invites · Race days</div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <p class="commission-table__note">
+    {{ section.settings.note | default: "Tiers reviewed quarterly. Move up automatically — no application required. Move down only if there has been zero activity for two quarters running." }}
+  </p>
+</section>
+
+{% schema %}
+{
+  "name": "Commission Table",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "COMMISSION TIERS" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The more you push, the more you earn." },
+    { "type": "textarea", "id": "note", "label": "Footer note" }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Tier",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Tier name", "default": "ROOTS" },
+        { "type": "text", "id": "sales_range", "label": "Quarterly sales", "default": "£0 – £999" },
+        { "type": "text", "id": "commission", "label": "Commission %", "default": "15%" },
+        { "type": "text", "id": "audience_discount", "label": "Audience discount", "default": "10%" },
+        { "type": "text", "id": "perks", "label": "Perks", "default": "Welcome tee · Tracking dashboard" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Commission Table" }
+  ]
+}
+{% endschema %}

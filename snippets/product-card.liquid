@@ -1,0 +1,102 @@
+{% comment %}
+  Renders a product card.
+  Accepts:
+    - card_product: {Object} Shopify product object
+  Usage:
+    {% render 'product-card', card_product: product %}
+{% endcomment %}
+
+{%- liquid
+  assign card_product = card_product | default: product
+  assign tag_label = ''
+  for tag in card_product.tags
+    assign tag_lower = tag | downcase
+    if tag_lower == 'new'
+      assign tag_label = 'NEW'
+    elsif tag_lower == 'restocked'
+      assign tag_label = 'RESTOCKED'
+    elsif tag_lower == 'sale'
+      assign tag_label = 'SALE'
+    endif
+  endfor
+  assign first_variant = card_product.selected_or_first_available_variant
+-%}
+
+<div class="product-card">
+  <a href="{{ card_product.url }}" class="product-card__image-link" tabindex="-1" aria-hidden="true">
+    <div class="product-card__image-wrap">
+      {%- if tag_label != '' -%}
+        <span class="product-card__tag product-card__tag--{{ tag_label | downcase }}">{{ tag_label }}</span>
+      {%- endif -%}
+
+      {%- if card_product.featured_image -%}
+        <img
+          class="product-card__img product-card__img--primary"
+          src="{{ card_product.featured_image | image_url: width: 800 }}"
+          srcset="{{ card_product.featured_image | image_url: width: 400 }} 400w,
+                  {{ card_product.featured_image | image_url: width: 800 }} 800w"
+          sizes="(max-width: 768px) 50vw, 25vw"
+          alt="{{ card_product.featured_image.alt | default: card_product.title | escape }}"
+          loading="lazy"
+          width="800"
+          height="800"
+        >
+        {%- if card_product.images.size > 1 -%}
+          {%- assign second_image = card_product.images[1] -%}
+          <img
+            class="product-card__img product-card__img--secondary"
+            src="{{ second_image | image_url: width: 800 }}"
+            srcset="{{ second_image | image_url: width: 400 }} 400w,
+                    {{ second_image | image_url: width: 800 }} 800w"
+            sizes="(max-width: 768px) 50vw, 25vw"
+            alt="{{ second_image.alt | default: card_product.title | escape }}"
+            loading="lazy"
+            width="800"
+            height="800"
+            aria-hidden="true"
+          >
+        {%- endif -%}
+      {%- else -%}
+        <div class="product-card__placeholder">{{ card_product.title | upcase }} · IMAGE</div>
+      {%- endif -%}
+    </div>
+  </a>
+
+  <div class="product-card__body">
+    <a href="{{ card_product.url }}" class="product-card__title">{{ card_product.title }}</a>
+    <div class="jdgm-widget jdgm-preview-badge" data-id="{{ card_product.id }}" data-template="index" style="margin-top:6px"></div>
+
+    {%- if card_product.description != blank -%}
+      <p class="product-card__desc">{{ card_product.description | strip_html | truncate: 80 }}</p>
+    {%- endif -%}
+
+    <div class="product-card__price">
+      <span class="product-card__price-current">{{ card_product.price | money }}</span>
+      {%- if card_product.compare_at_price > card_product.price -%}
+        <span class="product-card__price-compare">{{ card_product.compare_at_price | money }} RRP elsewhere</span>
+      {%- endif -%}
+    </div>
+
+    <div class="btn-add-to-cart">
+      {%- if card_product.available == false -%}
+        <button disabled aria-label="{{ card_product.title | escape }} is sold out">SOLD OUT</button>
+      {%- elsif card_product.has_only_default_variant -%}
+        <button data-add-to-cart data-variant-id="{{ first_variant.id }}" aria-label="Add {{ card_product.title | escape }} to cart">ADD TO CART</button>
+      {%- elsif card_product.options.size == 1 -%}
+        <button type="button" class="js-quick-add-toggle" data-quick-add-toggle aria-expanded="false">ADD TO CART</button>
+        <div class="quick-add" hidden>
+          <span class="quick-add__label">Choose a size</span>
+          <div class="quick-add__sizes">
+            {%- for variant in card_product.variants -%}
+              <button type="button" class="quick-add__size{% unless variant.available %} is-unavailable{% endunless %}"
+                {% if variant.available %}data-add-to-cart data-variant-id="{{ variant.id }}"{% else %}disabled{% endif %}
+                aria-label="Add {{ card_product.title | escape }} — {{ variant.title | escape }}">{{ variant.title }}</button>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- else -%}
+        <a href="{{ card_product.url }}" class="quick-add__choose">CHOOSE OPTIONS</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

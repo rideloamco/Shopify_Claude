@@ -1,0 +1,13 @@
+{%- comment -%}
+  Customisable robots.txt. Keeps Shopify's sensible defaults (blocks
+  /cart, /checkout, /admin, etc. and points crawlers at the sitemap),
+  and is here so rules can be adjusted later without fighting the platform.
+{%- endcomment -%}
+{% for group in robots.default_groups %}
+  {{- group.user_agent }}
+  {% for rule in group.rules %}{{ rule }}
+  {% endfor -%}
+  {%- if group.sitemap != blank %}
+  {{ group.sitemap }}
+  {% endif -%}
+{% endfor %}

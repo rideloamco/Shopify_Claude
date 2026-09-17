@@ -1,0 +1,157 @@
+{
+  "current": {
+    "color_accent": "#DAEE01",
+    "color_background": "#FFFFFF",
+    "color_text": "#0A0A0A",
+    "type_display": "bebas",
+    "meta_pixel_id": "1091297243640555",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo_light": "shopify://shop_images/loam_co_web_logo_-_black.png",
+          "logo_dark": "shopify://shop_images/loam-co-web-logo---Lime.png",
+          "logo_width": 64,
+          "menu": "main-menu"
+        }
+      },
+      "hero-video": {
+        "type": "hero-video",
+        "settings": {
+          "show_section": true,
+          "headline": "Rider-owned mountain bike clothing.",
+          "subtext": "Priced like we ride it ourselves, because we do.",
+          "cta_label": "DISCOVER THE RANGE",
+          "cta_url": "",
+          "cta2_label": "",
+          "cta2_url": "",
+          "video_url": "https://cdn.shopify.com/videos/c/o/v/9f98714b6d6c482eb29ee9cbae17992a.mp4",
+          "background_image": "shopify://shop_images/LOAM-CO--white-_lanyard_-1.0.png",
+          "stamp": "By Riders, For Riders"
+        }
+      },
+      "marquee": {
+        "type": "marquee",
+        "settings": {
+          "show_section": true,
+          "text": "RIDER OWNED|TRAIL TESTED|BUILT FOR THE GRAFT|MADE TO BE WORN OUT",
+          "theme": "dark"
+        }
+      },
+      "shop-collection": {
+        "type": "shop-collection",
+        "settings": {
+          "show_section": true,
+          "eyebrow": "Shop now",
+          "heading": "NEW DROPS",
+          "collection": "just-droped",
+          "products_to_show": 8
+        }
+      },
+      "about-us": {
+        "type": "about-us",
+        "settings": {
+          "show_section": true,
+          "eyebrow": "ABOUT US",
+          "heading": "Born on the trails.",
+          "body": "",
+          "button_label": "READ OUR STORY",
+          "button_url": ""
+        }
+      },
+      "why-riders": {
+        "type": "why-riders",
+        "settings": {
+          "show_section": false,
+          "eyebrow": "WHY RIDERS CHOOSE LOAM CO.",
+          "heading": "Four things, done properly."
+        }
+      },
+      "journal": {
+        "type": "journal",
+        "settings": {
+          "show_section": false,
+          "eyebrow": "READ OUR",
+          "heading": "Trail notes",
+          "blog": "blog",
+          "posts_to_show": 3
+        }
+      },
+      "reviews": {
+        "type": "reviews",
+        "settings": {
+          "show_section": false,
+          "eyebrow": "WHAT THE RIDERS SAY",
+          "heading": "REVIEWS"
+        }
+      },
+      "ambassadors-cta": {
+        "type": "ambassadors-cta",
+        "settings": {
+          "show_section": true,
+          "eyebrow": "AMBASSADORS · AFFILIATES",
+          "body": "",
+          "stat_1_number": "15%",
+          "stat_1_label": "COMMISSION ON EVERY SALE",
+          "stat_2_number": "10%",
+          "stat_2_label": "DISCOUNT FOR YOUR AUDIENCE",
+          "stat_3_number": "£0",
+          "stat_3_label": "JOINING FEE · NO QUOTAS",
+          "goaffpro_url": ""
+        }
+      },
+      "newsletter": {
+        "type": "newsletter",
+        "settings": {
+          "show_section": true,
+          "eyebrow": "JOIN THE COMMUNITY",
+          "heading": "Join the dirt cult.",
+          "body": "Trail tips, product drops, and exclusive offers. No marketing fluff.",
+          "placeholder": "rider@trails.uk",
+          "instagram_url": "",
+          "tiktok_url": "",
+          "youtube_url": "",
+          "klaviyo_public_key": "",
+          "klaviyo_list_id": "",
+          "klaviyo_form_id": "",
+          "mailchimp_action": "",
+          "mailchimp_u": "",
+          "mailchimp_id": ""
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "logo_light": "shopify://shop_images/loam_co_web_logo_-_black.png",
+          "tagline": "Rider owned. Trail tested.",
+          "company_number": "COMPANY NO. 12345678"
+        }
+      },
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "show_bar": true,
+          "messages": "FREE UK SHIPPING OVER £50|30-DAY EASY RETURNS|40% CRASH REPLACEMENT|RIDER-OWNED"
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "17368511000352060744": {
+        "type": "shopify://apps/goaffpro-affiliate-marketing/blocks/goaffpro-embedded-pixel/2f4d802b-86c2-47e4-8096-ae1aa3efbab2",
+        "disabled": false,
+        "settings": {
+          "enable_toolbar": false,
+          "enable_floating_widget": false,
+          "enable_popup": false
+        }
+      },
+      "855628211100114053": {
+        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": false,
+        "settings": {}
+      }
+    }
+  },
+  "presets": {}
+}

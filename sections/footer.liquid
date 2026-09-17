@@ -1,0 +1,60 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer__inner">
+    <div>
+      {%- assign footer_logo = section.settings.logo_light | default: settings.logo_on_light -%}
+      <a href="{{ routes.root_url }}" class="site-footer__logo" aria-label="{{ shop.name }}">
+        {%- if footer_logo != blank -%}
+          <img src="{{ footer_logo | image_url: width: 320 }}" alt="{{ shop.name | escape }}" style="width:104px;height:auto;display:block">
+        {%- else -%}
+          LOAM<span style="font-size:16px;letter-spacing:.04em">CO.</span>
+        {%- endif -%}
+      </a>
+      <p class="site-footer__tagline">
+        {{ section.settings.tagline | default: 'Rider owned. Trail tested. Made to be worn out.' }}
+      </p>
+    </div>
+    <div>
+      <div class="site-footer__col-heading">SHOP</div>
+      <ul class="site-footer__links">
+        <li><a href="{{ routes.root_url }}collections/casual">Casual</a></li>
+        <li><a href="{{ routes.root_url }}collections/ride-wear">Ride Wear</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="site-footer__col-heading">COMPANY</div>
+      <ul class="site-footer__links">
+        <li><a href="{{ routes.root_url }}pages/about">Our Story</a></li>
+        <li><a href="{{ routes.root_url }}blogs/blog">Blog</a></li>
+        <li><a href="{{ routes.root_url }}pages/ambassadors">Ambassadors</a></li>
+        <li><a href="{{ routes.root_url }}pages/crash-replacement">Crash Replacement</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="site-footer__col-heading">HELP</div>
+      <ul class="site-footer__links">
+        <li><a href="{{ routes.root_url }}pages/faq">FAQs</a></li>
+        <li><a href="{{ routes.root_url }}pages/shipping">Shipping</a></li>
+        <li><a href="{{ routes.root_url }}pages/returns">Returns</a></li>
+        <li><a href="{{ routes.root_url }}pages/contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    <div>© {{ 'now' | date: '%Y' }} {{ shop.name | upcase }} · {{ section.settings.company_number | default: 'COMPANY NO. 12345678' }}</div>
+    <div class="site-footer__legal">
+      <a href="{{ routes.root_url }}policies/privacy-policy">Privacy</a>
+      <a href="{{ routes.root_url }}policies/terms-of-service">Terms</a>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "image_picker", "id": "logo_light", "label": "Footer logo (BLACK version)", "info": "Leave blank to use the LOAM CO. text." },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Rider owned. Trail tested. Made to be worn out." },
+    { "type": "text", "id": "company_number", "label": "Company number", "default": "COMPANY NO. 12345678" }
+  ]
+}
+{% endschema %}

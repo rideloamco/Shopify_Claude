@@ -1,0 +1,105 @@
+<section id="apply" class="section-apply">
+  <div class="section-apply__inner">
+
+    {% if section.settings.goaffpro_url != blank %}
+      <!-- GoAffPro primary CTA -->
+      <div style="text-align:center;padding:0 0 64px">
+        <p class="eyebrow" style="margin-bottom:20px">{{ section.settings.eyebrow | default: 'APPLY' }}</p>
+        <h2 style="font-family:var(--font-display);font-size:clamp(48px,7vw,80px);color:var(--loam-white);line-height:.95;letter-spacing:.02em;margin-bottom:24px">
+          {{ section.settings.heading | default: 'Apply to ride.' }}
+        </h2>
+        <p style="font-size:16px;color:#0A0A0A;max-width:520px;margin:0 auto 40px;line-height:1.55">
+          {{ section.settings.subheading | default: 'Sign up through our ambassador portal — powered by GoAffPro. Takes three minutes. We review every application within 7 days.' }}
+        </p>
+        <a href="{{ section.settings.goaffpro_url }}" target="_blank" rel="noopener" class="btn btn--primary" style="font-size:15px;padding:18px 48px;display:inline-flex;align-items:center;gap:12px">
+          JOIN THE PROGRAMME
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+        <p style="font-size:12px;color:var(--loam-ash);margin-top:16px;font-family:var(--font-narrow);letter-spacing:.1em">
+          Already an ambassador? <a href="{{ section.settings.goaffpro_login_url | default: 'https://portal.goaffpro.com' }}" target="_blank" rel="noopener" style="color:#0A0A0A;text-decoration:none">LOG IN TO YOUR DASHBOARD →</a>
+        </p>
+      </div>
+
+      <!-- What you get panel -->
+      <div style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);padding:40px;max-width:720px;margin:0 auto">
+        <p style="font-family:var(--font-narrow);font-weight:700;letter-spacing:.18em;font-size:12px;color:#0A0A0A;margin-bottom:24px">WHAT YOU GET ON DAY ONE</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          {% assign perks = "Unique tracking link + discount code|Real-time sales dashboard|Monthly bank transfer payouts|15% base commission from first sale|Free kit for top performers|First look at every new drop" | split: "|" %}
+          {% for perk in perks %}
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <span style="color:#0A0A0A;font-weight:700;flex-shrink:0">+</span>
+              <span style="font-size:14px;color:#0A0A0A;line-height:1.4">{{ perk }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    {% else %}
+      <!-- Fallback contact form (before GoAffPro is set up) -->
+      <p class="eyebrow" style="margin-bottom:20px">{{ section.settings.eyebrow | default: 'APPLY' }}</p>
+      <h2 class="section-apply__heading">{{ section.settings.heading | default: 'Apply to ride.' }}</h2>
+      <p style="font-size:15px;color:#0A0A0A;margin-top:16px;margin-bottom:36px">
+        {{ section.settings.subheading | default: 'Three minutes. Honest answers. We get back inside 7 days.' }}
+      </p>
+
+      <div style="background:rgba(218,238,1,0.1);border:1px solid var(--loam-neon);padding:20px;margin-bottom:36px;max-width:600px">
+        <p style="font-family:var(--font-narrow);font-size:13px;color:#0A0A0A;font-weight:700;letter-spacing:.12em;margin-bottom:4px">INSTALL GOAFFPRO</p>
+        <p style="font-size:13px;color:#0A0A0A">Add your GoAffPro portal URL in the theme editor to activate the ambassador sign-up flow. Until then, use this contact form.</p>
+      </div>
+
+      {% form 'contact', id: 'ambassador-apply-form', class: 'js-apply-form' %}
+        <input type="hidden" name="contact[tags]" value="ambassador-application">
+        <div class="form-grid-2" style="gap:24px;margin-bottom:24px">
+          <div class="form-group">
+            <label for="apply-name" class="field-label">NAME</label>
+            <input id="apply-name" type="text" name="contact[name]" class="field-input" placeholder="Sam Rider" required>
+          </div>
+          <div class="form-group">
+            <label for="apply-email" class="field-label">EMAIL</label>
+            <input id="apply-email" type="email" name="contact[email]" class="field-input" placeholder="you@trails.uk" required>
+          </div>
+        </div>
+        <div class="form-grid-2" style="gap:24px;margin-bottom:24px">
+          <div class="form-group">
+            <label for="apply-handle" class="field-label">PRIMARY SOCIAL HANDLE</label>
+            <input id="apply-handle" type="text" name="contact[social_handle]" class="field-input" placeholder="@yourhandle (IG / TT / YT)" required>
+          </div>
+          <div class="form-group">
+            <label for="apply-region" class="field-label">HOME TRAILS / REGION</label>
+            <input id="apply-region" type="text" name="contact[region]" class="field-input" placeholder="Where you ride">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:24px">
+          <label for="apply-why" class="field-label">TELL US ABOUT YOU</label>
+          <textarea id="apply-why" name="contact[body]" class="field-input" rows="4" placeholder="What kind of content do you make? Who's your community? Why Loam Co.?" required></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary">SUBMIT APPLICATION</button>
+      {% endform %}
+    {% endif %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Apply Form",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "APPLY" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Apply to ride." },
+    { "type": "text", "id": "subheading", "label": "Sub-heading", "default": "Sign up through our ambassador portal. Takes three minutes." },
+    {
+      "type": "url",
+      "id": "goaffpro_url",
+      "label": "GoAffPro signup URL",
+      "info": "Paste your GoAffPro ambassador signup link here (e.g. https://loam-co-2.goaffpro.com/register). Leave blank to show the contact form instead."
+    },
+    {
+      "type": "url",
+      "id": "goaffpro_login_url",
+      "label": "GoAffPro login URL",
+      "info": "Your GoAffPro ambassador portal login URL."
+    }
+  ],
+  "presets": [{ "name": "Apply Form" }]
+}
+{% endschema %}

@@ -1,0 +1,46 @@
+<div id="cart-overlay" class="cart-overlay" aria-hidden="true"></div>
+
+<div id="cart-drawer" class="cart-drawer" role="dialog" aria-label="Shopping cart" aria-modal="true">
+  <div class="cart-drawer__header">
+    <h2 class="cart-drawer__title">Your Bag</h2>
+    <button class="cart-drawer__close" data-action="close-cart" aria-label="Close cart">✕</button>
+  </div>
+
+  <div id="cart-shipping" class="cart-shipping"{% if cart.item_count == 0 %} style="display:none"{% endif %}>
+    <div class="cart-shipping__text"></div>
+    <div class="cart-shipping__track"><div class="cart-shipping__fill"></div></div>
+  </div>
+
+  <div id="cart-drawer-body" class="cart-drawer__body">
+    {%- if cart.item_count == 0 -%}
+      <p class="cart-drawer__empty">Bag's empty. Get to it.</p>
+      <a href="{{ collections['shop-all'].url | default: routes.all_products_collection_url }}" class="btn btn--primary" style="margin-top:18px">SHOP THE KIT</a>
+    {%- else -%}
+      {%- for item in cart.items -%}
+        <div class="cart-item">
+          <div class="cart-item__image">
+            {%- if item.image -%}
+              <img src="{{ item.image | image_url: width: 140 }}" alt="{{ item.image.alt | escape }}" width="70" height="70" loading="lazy">
+            {%- endif -%}
+          </div>
+          <div class="cart-item__info">
+            <div class="cart-item__name">{{ item.product.title }}</div>
+            {%- unless item.variant.title == 'Default Title' -%}
+              <div class="cart-item__variant">{{ item.variant.title }}</div>
+            {%- endunless -%}
+            <div class="cart-item__price">{{ item.line_price | money }}</div>
+            <button class="cart-item__remove" data-line="{{ forloop.index }}">Remove</button>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+  <div class="cart-drawer__footer">
+    <div class="cart-drawer__subtotal">
+      <span class="cart-drawer__subtotal-label">Subtotal</span>
+      <span id="cart-total" class="cart-drawer__subtotal-value">{{ cart.total_price | money }}</span>
+    </div>
+    <a href="/checkout" class="cart-drawer__checkout" data-action="checkout">CHECKOUT</a>
+  </div>
+</div>

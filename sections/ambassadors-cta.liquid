@@ -1,0 +1,83 @@
+{% if section.settings.show_section != false %}
+<section id="ambassadors" class="section-ambassador">
+  <div class="section-ambassador__inner">
+    <div>
+      <p class="eyebrow eyebrow--neon">{{ section.settings.eyebrow | default: 'AMBASSADORS · AFFILIATES' }}</p>
+      <h2 class="section-ambassador__heading">
+        Ride with us.<br>
+        <span class="neon-block">Get paid.</span>
+      </h2>
+      <p style="font-size:16px;line-height:1.55;color:var(--loam-white);margin-top:22px;max-width:480px">
+        {{ section.settings.body | default: 'Make content. Push people to the kit. Earn a cut on every sale through your link. No quotas. No exclusivity. Just riders selling kit they actually wear.' }}
+      </p>
+
+      <div class="section-ambassador__stats">
+        <div class="section-ambassador__stat">
+          <div class="section-ambassador__stat-num">{{ section.settings.stat_1_number | default: '15%' }}</div>
+          <div class="section-ambassador__stat-label">{{ section.settings.stat_1_label | default: 'COMMISSION ON EVERY SALE' }}</div>
+        </div>
+        <div class="section-ambassador__stat">
+          <div class="section-ambassador__stat-num">{{ section.settings.stat_2_number | default: '10%' }}</div>
+          <div class="section-ambassador__stat-label">{{ section.settings.stat_2_label | default: 'DISCOUNT FOR YOUR AUDIENCE' }}</div>
+        </div>
+        <div class="section-ambassador__stat">
+          <div class="section-ambassador__stat-num">{{ section.settings.stat_3_number | default: '£0' }}</div>
+          <div class="section-ambassador__stat-label">{{ section.settings.stat_3_label | default: 'JOINING FEE · NO QUOTAS' }}</div>
+        </div>
+      </div>
+
+      <ul class="section-ambassador__benefits">
+        <li class="section-ambassador__benefit"><span class="section-ambassador__benefit-icon">+</span>Free kit drops for top performers each quarter</li>
+        <li class="section-ambassador__benefit"><span class="section-ambassador__benefit-icon">+</span>Custom discount code + tracking dashboard</li>
+        <li class="section-ambassador__benefit"><span class="section-ambassador__benefit-icon">+</span>Monthly payouts via bank transfer</li>
+        <li class="section-ambassador__benefit"><span class="section-ambassador__benefit-icon">+</span>First look at new product drops</li>
+      </ul>
+    </div>
+
+    <div class="ambassador-form-box">
+      <div class="ambassador-form-box__title">Become an ambassador</div>
+      <p class="ambassador-form-box__sub">Sign up through our portal. Takes three minutes. We review every application within 7 days.</p>
+
+      <a href="{{ section.settings.goaffpro_url | default: 'https://loam-co-2.goaffpro.com/' }}" target="_blank" rel="noopener" class="btn btn--primary" style="width:100%;justify-content:center;margin-top:24px;display:flex;align-items:center;gap:12px;font-size:15px;padding:18px 24px">
+        JOIN THE PROGRAMME
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+
+      <div style="margin-top:20px;padding:20px;background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1)">
+        <p style="font-family:var(--font-narrow);font-weight:700;letter-spacing:.14em;font-size:11px;color:#0A0A0A;margin-bottom:14px">WHAT YOU GET ON DAY ONE</p>
+        {% assign perks = "Unique tracking link + discount code|Real-time sales dashboard|Monthly bank transfer payouts|15% base commission from first sale|Free kit for top performers|First look at every new drop" | split: "|" %}
+        {% for perk in perks %}
+          <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:10px">
+            <span style="color:#0A0A0A;font-weight:700;flex-shrink:0">+</span>
+            <span style="font-size:13px;color:var(--loam-white);line-height:1.4">{{ perk }}</span>
+          </div>
+        {% endfor %}
+      </div>
+
+      <p style="font-size:12px;color:var(--loam-ash);margin-top:16px;font-family:var(--font-narrow);letter-spacing:.1em;text-align:center">
+        Already an ambassador? <a href="https://portal.goaffpro.com" target="_blank" rel="noopener" style="color:#0A0A0A;text-decoration:none">LOG IN TO YOUR DASHBOARD →</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Ambassadors CTA",
+  "settings": [
+    { "type": "checkbox", "id": "show_section", "label": "Show section", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "AMBASSADORS · AFFILIATES" },
+    { "type": "textarea", "id": "body", "label": "Body text" },
+    { "type": "text", "id": "stat_1_number", "label": "Stat 1 number", "default": "15%" },
+    { "type": "text", "id": "stat_1_label", "label": "Stat 1 label", "default": "COMMISSION ON EVERY SALE" },
+    { "type": "text", "id": "stat_2_number", "label": "Stat 2 number", "default": "10%" },
+    { "type": "text", "id": "stat_2_label", "label": "Stat 2 label", "default": "DISCOUNT FOR YOUR AUDIENCE" },
+    { "type": "text", "id": "stat_3_number", "label": "Stat 3 number", "default": "£0" },
+    { "type": "text", "id": "stat_3_label", "label": "Stat 3 label", "default": "JOINING FEE · NO QUOTAS" },
+    { "type": "url", "id": "goaffpro_url", "label": "GoAffPro signup URL", "info": "Your GoAffPro ambassador signup link, e.g. https://loam-co-2.goaffpro.com/" }
+  ],
+  "presets": [{ "name": "Ambassadors CTA" }]
+}
+{% endschema %}

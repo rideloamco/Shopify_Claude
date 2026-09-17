@@ -1,0 +1,57 @@
+{% assign featured_collection = collections[section.settings.collection] %}
+{% assign product_limit = section.settings.products_to_show %}
+
+{% if section.settings.show_section != false %}
+<section id="shop" class="section-shop">
+  <div class="section-shop__header">
+    <div>
+      <p class="eyebrow">{{ section.settings.eyebrow | default: 'SHOP A COLLECTION' }}</p>
+      <h2 class="section-shop__heading">{{ section.settings.heading | default: 'The Kit' }}</h2>
+    </div>
+    <a href="{{ collections['shop-all'].url | default: routes.all_products_collection_url }}" class="btn--outline-neon" style="font-family:var(--font-narrow);font-weight:700;text-transform:uppercase;letter-spacing:.18em;font-size:12px;padding:12px 18px;border:2px solid #0A0A0A;color:#0A0A0A;background:transparent;text-decoration:none;display:inline-flex;align-items:center;gap:8px">
+      SHOP ALL
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+  </div>
+
+  <div class="section-shop__grid">
+    {% if featured_collection != blank and featured_collection.products_count > 0 %}
+      {% for product in featured_collection.products limit: product_limit %}
+        {% render 'product-card', card_product: product %}
+      {% endfor %}
+    {% else %}
+      {% for i in (1..8) %}
+        <div class="product-card">
+          <div class="product-card__image-wrap">
+            <div class="product-card__placeholder">PRODUCT {{ i }} · IMAGE</div>
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__title">Sample Product</span>
+            <div class="product-card__price"><span class="product-card__price-current">£65.00</span></div>
+            <div class="btn-add-to-cart"><button disabled>ADD TO CART</button></div>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Shop Collection",
+  "settings": [
+    { "type": "checkbox", "id": "show_section", "label": "Show section", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "SHOP A COLLECTION" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Kit" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 2, "max": 8, "step": 1, "default": 8
+    }
+  ],
+  "presets": [{ "name": "Shop Collection" }]
+}
+{% endschema %}

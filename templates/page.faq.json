@@ -1,0 +1,82 @@
+{
+  "sections": {
+    "faq": {
+      "type": "page-faq",
+      "settings": {},
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does UK delivery take?",
+            "answer": "<p>Standard delivery takes 3–5 working days and is free on orders over £50 (£3.99 under £50). Express is 1–2 working days for £6.99, and Next Day is £9.99 if you order by 2pm. Orders are processed within 1–2 working days.</p>"
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "<p>Yes. Europe is £12.99 (5–10 working days) and the rest of the world is £18.99 (7–14 working days). Import duties and taxes, where applied, are the responsibility of the recipient.</p>"
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "What is your returns policy?",
+            "answer": "<p>You've got 30 days from delivery to return unworn, unwashed items with tags attached. Email ride.loamco@gmail.com with your order number and we'll sort you a returns authorisation. UK returns get a prepaid Royal Mail label. Refunds are processed within 5 working days of us receiving your return.</p>"
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "How do exchanges work?",
+            "answer": "<p>Want a different size or colour? Email us before returning and we'll hold stock for you. Exchanges are dispatched the same day we receive your return, with free standard delivery.</p>"
+          }
+        },
+        "q5": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the Crash Replacement Scheme?",
+            "answer": "<p>Crashed and trashed your kit? We'll replace the same item at 40% off, no questions asked. Submit a claim with a photo of the damage and your order number within 60 days of the crash. One claim per item per 12-month period.</p>"
+          }
+        },
+        "q6": {
+          "type": "faq",
+          "settings": {
+            "question": "How does Loam Co. sizing run?",
+            "answer": "<p>Our kit is cut for riding — room to move without being baggy. It runs true to size, and every product page has a size guide with garment measurements. Between sizes? We'd say size up for layering, down for a closer fit. Not sure? Email us — we'll help you get it right first time.</p>"
+          }
+        },
+        "q7": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I care for my kit?",
+            "answer": "<p>Machine wash cold (30°C), skip the fabric softener (it clogs technical fabrics), and hang dry. That's it. Mud washes out — that's the point.</p>"
+          }
+        },
+        "q8": {
+          "type": "faq",
+          "settings": {
+            "question": "Are your products sustainable?",
+            "answer": "<p>We use recycled fabrics where performance allows, ship plastic-free, and never overstock. No seasonal clearance mountains, no fast fashion, no greenwashing sermon.</p>"
+          }
+        },
+        "q9": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I become a Loam Co. ambassador?",
+            "answer": "<p>Apply through our ambassadors page. 15% base commission on every sale through your link, no quotas, no exclusivity, no joining fee. We review every application within 7 days.</p>"
+          }
+        },
+        "q10": {
+          "type": "faq",
+          "settings": {
+            "question": "How can I get in touch?",
+            "answer": "<p>Email ride.loamco@gmail.com or use the contact page. We get back to every message within 48 hours on working days — usually much faster. We actually read the emails.</p>"
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"]
+    }
+  },
+  "order": ["faq"]
+}

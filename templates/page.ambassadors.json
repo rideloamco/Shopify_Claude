@@ -1,0 +1,32 @@
+{
+  "sections": {
+    "ambassadors-hero": {
+      "type": "ambassadors-hero",
+      "settings": {}
+    },
+    "marquee": {
+      "type": "marquee",
+      "settings": {
+        "text": "RIDER-OWNED|TRAIL TESTED|EARN 15% COMMISSION|NO JOINING FEE|MONTHLY PAYOUTS",
+        "theme": "dark"
+      }
+    },
+    "how-it-works": {
+      "type": "how-it-works",
+      "settings": {}
+    },
+    "apply-form": {
+      "type": "apply-form",
+      "settings": {
+        "goaffpro_url": "https://loam-co-2.goaffpro.com/",
+        "goaffpro_login_url": "https://portal.goaffpro.com"
+      }
+    }
+  },
+  "order": [
+    "ambassadors-hero",
+    "marquee",
+    "how-it-works",
+    "apply-form"
+  ]
+}

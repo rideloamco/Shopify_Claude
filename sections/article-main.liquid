@@ -1,0 +1,141 @@
+<!-- JSON-LD: BlogPosting -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ article.title | json }},
+  "description": {{ article.excerpt_or_content | strip_html | truncate: 160 | json }},
+  "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+  "dateModified": "{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+  "author": {
+    "@type": "Person",
+    "name": {{ article.author | json }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }}
+  },
+  {% if article.image %}
+  "image": {
+    "@type": "ImageObject",
+    "url": "{{ article.image | image_url: width: 1200 }}",
+    "width": 1200
+  },
+  {% endif %}
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": {{ canonical_url | json }}
+  }
+}
+</script>
+
+<article class="article-page" itemscope itemtype="https://schema.org/BlogPosting" style="background:var(--loam-black)">
+
+  <!-- Breadcrumb -->
+  <nav style="max-width:1200px;margin:0 auto;padding:24px var(--space-6) 0;font-family:var(--font-narrow);font-size:12px;letter-spacing:.1em;color:var(--loam-ash)" aria-label="Breadcrumb">
+    <ol style="list-style:none;display:flex;gap:8px;padding:0;margin:0" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="{{ routes.root_url }}" style="color:var(--loam-ash);text-decoration:none" itemprop="item"><span itemprop="name">HOME</span></a>
+        <meta itemprop="position" content="1">
+      </li>
+      <li style="color:var(--loam-graphite)">›</li>
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="{{ blog.url }}" style="color:var(--loam-ash);text-decoration:none" itemprop="item"><span itemprop="name">{{ blog.title | upcase }}</span></a>
+        <meta itemprop="position" content="2">
+      </li>
+      <li style="color:var(--loam-graphite)">›</li>
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span style="color:#0A0A0A;font-weight:700" itemprop="name">{{ article.title | truncate: 40 | upcase }}</span>
+        <meta itemprop="position" content="3">
+      </li>
+    </ol>
+  </nav>
+
+  <!-- Header -->
+  <header style="max-width:800px;margin:0 auto;padding:48px var(--space-6) 40px">
+    {% if article.tags.size > 0 %}
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+        {% for tag in article.tags %}
+          <span style="font-family:var(--font-narrow);font-size:11px;font-weight:700;letter-spacing:.2em;background:var(--loam-neon);color:#0A0A0A;padding:4px 10px">{{ tag | upcase }}</span>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <h1 style="font-family:var(--font-display);font-size:clamp(40px,6vw,72px);color:var(--loam-white);line-height:.95;letter-spacing:.02em;margin-bottom:28px" itemprop="headline">
+      {{ article.title }}
+    </h1>
+
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding-bottom:28px;border-bottom:1px solid rgba(0,0,0,0.1)">
+      <div style="font-family:var(--font-narrow);font-size:13px;color:var(--loam-ash);letter-spacing:.08em">
+        By <span style="color:var(--loam-white)" itemprop="author">{{ article.author }}</span>
+      </div>
+      <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}" style="font-family:var(--font-narrow);font-size:13px;color:var(--loam-ash);letter-spacing:.08em" itemprop="datePublished">
+        {{ article.published_at | date: '%d %B %Y' }}
+      </time>
+      <span style="font-family:var(--font-narrow);font-size:13px;color:var(--loam-ash);letter-spacing:.08em">
+        {{ article.content | strip_html | size | divided_by: 200 | plus: 1 }} min read
+      </span>
+    </div>
+  </header>
+
+  <!-- Featured image -->
+  {% if article.image %}
+    <div style="max-width:1200px;margin:0 auto;padding:0 var(--space-6) 48px">
+      <img
+        src="{{ article.image | image_url: width: 1200 }}"
+        srcset="{{ article.image | image_url: width: 600 }} 600w, {{ article.image | image_url: width: 1200 }} 1200w"
+        sizes="(max-width: 768px) 100vw, 1200px"
+        alt="{{ article.image.alt | default: article.title | escape }}"
+        width="1200" height="630"
+        style="width:100%;height:auto;display:block"
+        itemprop="image">
+    </div>
+  {% endif %}
+
+  <!-- Body content -->
+  <div class="article-body" style="max-width:800px;margin:0 auto;padding:0 var(--space-6) 80px" itemprop="articleBody">
+    {{ article.content }}
+  </div>
+
+  <!-- Tags footer -->
+  {% if article.tags.size > 0 %}
+    <div style="max-width:800px;margin:0 auto;padding:0 var(--space-6) 48px;border-top:1px solid rgba(0,0,0,0.08);padding-top:32px">
+      <p style="font-family:var(--font-narrow);font-size:11px;letter-spacing:.2em;color:var(--loam-ash);margin-bottom:12px">TAGS</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        {% for tag in article.tags %}
+          <a href="{{ blog.url }}/tagged/{{ tag | handle }}" style="font-family:var(--font-narrow);font-size:11px;font-weight:700;letter-spacing:.15em;border:1px solid rgba(0,0,0,0.15);color:#0A0A0A;padding:6px 12px;text-decoration:none">
+            {{ tag | upcase }}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- Prev / Next navigation -->
+  <div style="max-width:1200px;margin:0 auto;padding:0 var(--space-6) 80px;display:grid;grid-template-columns:1fr 1fr;gap:24px">
+    {% if blog.previous_article %}
+      <a href="{{ blog.previous_article }}" style="border:1px solid rgba(0,0,0,0.1);padding:24px;text-decoration:none;display:block">
+        <p style="font-family:var(--font-narrow);font-size:11px;letter-spacing:.2em;color:var(--loam-ash);margin-bottom:8px">← PREVIOUS</p>
+        <p style="font-family:var(--font-narrow);font-size:14px;color:var(--loam-white)">{{ blog.previous_article.title }}</p>
+      </a>
+    {% else %}
+      <div></div>
+    {% endif %}
+    {% if blog.next_article %}
+      <a href="{{ blog.next_article }}" style="border:1px solid rgba(0,0,0,0.1);padding:24px;text-decoration:none;display:block;text-align:right">
+        <p style="font-family:var(--font-narrow);font-size:11px;letter-spacing:.2em;color:var(--loam-ash);margin-bottom:8px">NEXT →</p>
+        <p style="font-family:var(--font-narrow);font-size:14px;color:var(--loam-white)">{{ blog.next_article.title }}</p>
+      </a>
+    {% endif %}
+  </div>
+
+</article>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": [],
+  "presets": [{ "name": "Article" }]
+}
+{% endschema %}

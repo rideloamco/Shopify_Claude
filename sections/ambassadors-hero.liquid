@@ -1,0 +1,72 @@
+<section class="section-amb-hero">
+  <div class="section-amb-hero__inner">
+    <div>
+      <p class="eyebrow">{{ section.settings.eyebrow | default: 'AMBASSADOR PROGRAMME' }}</p>
+      <h1 class="section-amb-hero__heading">
+        Ride with us.<br>
+        <span class="neon-block">Get paid.</span>
+      </h1>
+      <p style="font-size:17px;line-height:1.55;color:var(--loam-white);margin-top:24px;max-width:560px">
+        {{ section.settings.body | default: 'Make content. Push people to the kit. Earn a cut on every sale through your link. No quotas. No exclusivity. Just riders selling kit they actually wear.' }}
+      </p>
+      <div class="section-amb-hero__actions">
+        <a href="#apply" class="btn btn--primary">APPLY NOW</a>
+        <a href="#how" class="btn btn--outline">HOW IT WORKS</a>
+      </div>
+    </div>
+
+    <div class="stats-box">
+      <div class="stats-box__label">BY THE NUMBERS</div>
+      <div class="stats-box__items">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'stat' -%}
+            <div class="stats-box__item" {{ block.shopify_attributes }}>
+              <span class="stats-box__num">{{ block.settings.number }}</span>
+              <span class="stats-box__desc">{{ block.settings.label }}</span>
+            </div>
+          {%- endif -%}
+        {%- else -%}
+          {%- assign stats = '15%,BASE COMMISSION|£0,JOINING FEE|7d,APPLICATION TURNAROUND|30d,PAYOUT CYCLE' | split: '|' -%}
+          {%- for s in stats -%}
+            {%- assign parts = s | split: ',' -%}
+            <div class="stats-box__item">
+              <span class="stats-box__num">{{ parts[0] }}</span>
+              <span class="stats-box__desc">{{ parts[1] }}</span>
+            </div>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ambassadors — Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "AMBASSADOR PROGRAMME" },
+    { "type": "textarea", "id": "body", "label": "Body text" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number", "default": "15%" },
+        { "type": "text", "id": "label", "label": "Label", "default": "BASE COMMISSION" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ambassadors — Hero",
+      "blocks": [
+        { "type": "stat", "settings": { "number": "15%", "label": "BASE COMMISSION" } },
+        { "type": "stat", "settings": { "number": "£0", "label": "JOINING FEE" } },
+        { "type": "stat", "settings": { "number": "7d", "label": "APPLICATION TURNAROUND" } },
+        { "type": "stat", "settings": { "number": "30d", "label": "PAYOUT CYCLE" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

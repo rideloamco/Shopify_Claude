@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "case-studies",
+      "blocks": {
+        "s1": { "type": "story", "settings": { "tag": "TRAIL RIDER", "name": "Add a rider", "quote": "<p>Add each rider's story in the theme editor — photo, a few lines on how they ride and how the kit holds up, and a link to what they wear.</p>", "link_label": "SHOP THEIR KIT" } },
+        "s2": { "type": "story", "settings": { "tag": "TRAIL RIDER", "name": "Add a rider", "quote": "<p>Real stories from real riders build trust faster than any ad. Swap these placeholders for your ambassadors and customers.</p>", "link_label": "SHOP THEIR KIT" } },
+        "s3": { "type": "story", "settings": { "tag": "TRAIL RIDER", "name": "Add a rider", "quote": "<p>Add as many as you like — each one is a separate block you can reorder or remove.</p>", "link_label": "SHOP THEIR KIT" } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

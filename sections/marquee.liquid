@@ -1,0 +1,51 @@
+{% liquid
+  if section.settings.theme == 'light'
+    assign bg_color = '#DAEE01'
+    assign text_color = '#0A0A0A'
+    assign dot_color = 'rgba(0,0,0,0.3)'
+  else
+    assign bg_color = '#0A0A0A'
+    assign text_color = '#DAEE01'
+    assign dot_color = '#fff'
+  endif
+  assign items = section.settings.text | split: '|'
+%}
+{% if section.settings.show_section != false %}
+<div class="marquee-section{% if section.settings.theme == 'light' %} marquee-section--light{% endif %}" style="background:{{ bg_color }}" aria-hidden="true">
+  <div class="marquee-track">
+    {% for i in (1..4) %}
+      {% for item in items %}
+        <span class="marquee-item" style="color:{{ text_color }}">
+          {{ item | strip }}<span style="color:{{ dot_color }}"> ·</span>
+        </span>
+      {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Marquee Strip",
+  "settings": [
+    { "type": "checkbox", "id": "show_section", "label": "Show section", "default": true },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Items (pipe-separated)",
+      "default": "RIDER OWNED|TRAIL TESTED|BUILT FOR THE GRAFT|MADE TO BE WORN OUT"
+    },
+    {
+      "type": "select",
+      "id": "theme",
+      "label": "Colour theme",
+      "options": [
+        { "value": "dark", "label": "Dark (black)" },
+        { "value": "light", "label": "Light (neon)" }
+      ],
+      "default": "dark"
+    }
+  ],
+  "presets": [{ "name": "Marquee Strip" }]
+}
+{% endschema %}

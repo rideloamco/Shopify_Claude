@@ -1,0 +1,24 @@
+{%- comment -%} Visible breadcrumb trail. Complements the BreadcrumbList JSON-LD in theme.liquid. {%- endcomment -%}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="{{ routes.root_url }}">Home</a>
+  {%- case request.page_type -%}
+    {%- when 'product' -%}
+      {%- if product.collections.first != blank -%}
+        <span class="breadcrumbs__sep" aria-hidden="true">/</span>
+        <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
+      {%- endif -%}
+      <span class="breadcrumbs__sep" aria-hidden="true">/</span>
+      <span aria-current="page">{{ product.title }}</span>
+    {%- when 'collection' -%}
+      <span class="breadcrumbs__sep" aria-hidden="true">/</span>
+      <span aria-current="page">{{ collection.title }}</span>
+    {%- when 'page' -%}
+      <span class="breadcrumbs__sep" aria-hidden="true">/</span>
+      <span aria-current="page">{{ page.title }}</span>
+    {%- when 'article' -%}
+      <span class="breadcrumbs__sep" aria-hidden="true">/</span>
+      <a href="{{ blog.url }}">{{ blog.title }}</a>
+      <span class="breadcrumbs__sep" aria-hidden="true">/</span>
+      <span aria-current="page">{{ article.title | truncate: 45 }}</span>
+  {%- endcase -%}
+</nav>

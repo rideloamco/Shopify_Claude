@@ -1,0 +1,49 @@
+{
+  "sections": {
+    "product-main": {
+      "type": "product-main",
+      "blocks": {
+        "trust": {
+          "type": "trust",
+          "settings": {}
+        },
+        "size_guide": {
+          "type": "size_guide",
+          "settings": {}
+        },
+        "ship": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Shipping & returns",
+            "content": "<p>Free UK standard shipping on orders over £50 (£3.99 under). Express and next-day options at checkout. 30-day easy returns — see our Returns page for full details.</p>"
+          }
+        },
+        "crash": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Crash replacement",
+            "content": "<p>Trashed your kit in a crash? We'll replace it at 40% off within a year of purchase. Submit a claim with a photo and your order number.</p>"
+          }
+        },
+        "care": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Care",
+            "content": "<p>Machine wash cold (30°C), no fabric softener, hang dry. Mud washes out — that's the point.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "trust",
+        "size_guide",
+        "ship",
+        "crash",
+        "care"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "product-main"
+  ]
+}

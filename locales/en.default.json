@@ -1,0 +1,67 @@
+{
+  "general": {
+    "search": {
+      "search": "Search",
+      "placeholder": "Search products…"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "onboarding_title": "Example Product",
+      "onboarding_vendor": "Loam Co."
+    },
+    "general": {
+      "view_product": "View product"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your Bag",
+      "empty": "Bag's empty. Get to it.",
+      "checkout": "Checkout",
+      "subtotal": "Subtotal",
+      "continue_shopping": "Continue shopping",
+      "update": "Update",
+      "remove": "Remove"
+    }
+  },
+  "customer": {
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "forgot_password": "Forgot your password?"
+    },
+    "account": {
+      "title": "My Account",
+      "details": "Account details",
+      "orders": "Order history"
+    }
+  },
+  "sections": {
+    "newsletter": {
+      "heading": "Join the dirt cult.",
+      "subtext": "Trail tips, product drops, and exclusive offers.",
+      "button": "Join"
+    }
+  },
+  "layout": {
+    "navigation": {
+      "expand_dropdown": "Expand submenu for {{ title }}"
+    }
+  },
+  "404": {
+    "title": "Wrong trail, mate.",
+    "subtext": "That page doesn't exist.",
+    "link": "Back to home"
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "close": "Close",
+    "open_cart": "Open cart"
+  }
+}

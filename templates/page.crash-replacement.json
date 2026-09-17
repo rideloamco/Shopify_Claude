@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "page-crash-replacement", "settings": {} }
+  },
+  "order": ["main"]
+}

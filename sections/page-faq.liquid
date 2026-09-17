@@ -1,0 +1,79 @@
+<div style="background:var(--loam-background);min-height:60vh">
+
+  <!-- Page header -->
+  <div style="padding:64px var(--space-6) 48px;border-bottom:var(--bw) solid var(--loam-charcoal)">
+    <div style="max-width:1100px;margin:0 auto">
+      <p class="eyebrow" style="margin-bottom:16px">{{ section.settings.eyebrow | default: 'HELP · SUPPORT' }}</p>
+      <h1 style="font-family:var(--font-display);font-size:clamp(48px,7vw,88px);color:var(--loam-foreground);line-height:.95;letter-spacing:.02em">{{ section.settings.heading | default: 'FAQs' }}</h1>
+    </div>
+  </div>
+
+  <!-- FAQ accordion -->
+  <section class="section-faqs" style="border-bottom:0">
+    <div class="section-faqs__inner" style="max-width:1100px;margin:0 auto">
+      <div>
+        <h2 class="section-faqs__heading">{{ section.settings.sub_heading | default: 'Questions, answered.' }}</h2>
+        <p style="font-size:15px;line-height:1.6;color:var(--loam-graphite);margin-top:20px;max-width:340px">
+          {{ section.settings.intro | default: "Can't find what you're after? Drop us a line — we get back to every message within 48 hours." }}
+        </p>
+        <a href="{{ routes.root_url }}pages/contact" class="btn btn--primary" style="margin-top:24px">CONTACT US</a>
+      </div>
+
+      <div class="faq-list">
+        {% for block in section.blocks %}
+          <div class="faq-item" {{ block.shopify_attributes }}>
+            <button class="faq-toggle" type="button" aria-expanded="false">
+              <span class="faq-question">{{ block.settings.question }}</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer">{{ block.settings.answer }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</div>
+
+{% if section.blocks.size > 0 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- for block in section.blocks -%}
+    {
+      "@type": "Question",
+      "name": {{ block.settings.question | json }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ block.settings.answer | strip_html | strip_newlines | json }}
+      }
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "FAQ Page",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "HELP · SUPPORT" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "FAQs" },
+    { "type": "text", "id": "sub_heading", "label": "Sub-heading", "default": "Questions, answered." },
+    { "type": "textarea", "id": "intro", "label": "Intro text" }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "How long does delivery take?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>UK standard delivery takes 3–5 working days.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "FAQ Page" }]
+}
+{% endschema %}

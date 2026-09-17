@@ -1,0 +1,39 @@
+{%- if section.settings.show_section != false and section.blocks.size > 0 -%}
+<div class="logo-bar">
+  {%- if section.settings.heading != blank -%}
+    <p class="logo-bar__heading">{{ section.settings.heading }}</p>
+  {%- endif -%}
+  <div class="logo-bar__row">
+    {%- for block in section.blocks -%}
+      {%- if block.settings.image != blank -%}
+        <div class="logo-bar__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" target="_blank" rel="noopener" aria-label="{{ block.settings.image.alt | default: 'Logo' | escape }}">{%- endif -%}
+            <img src="{{ block.settings.image | image_url: width: 400 }}" alt="{{ block.settings.image.alt | default: 'Logo' | escape }}" loading="lazy" width="200" height="80">
+          {%- if block.settings.link != blank -%}</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Logo bar",
+  "settings": [
+    { "type": "checkbox", "id": "show_section", "label": "Show section", "default": true },
+    { "type": "text", "id": "heading", "label": "Heading (optional)", "default": "AS SEEN ON THE TRAILS" }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Logo image", "info": "Transparent PNG/SVG works best." },
+        { "type": "url", "id": "link", "label": "Link (optional)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Logo bar", "blocks": [ { "type": "logo" }, { "type": "logo" }, { "type": "logo" }, { "type": "logo" } ] }]
+}
+{% endschema %}

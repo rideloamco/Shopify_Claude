@@ -1,0 +1,48 @@
+<section id="how" class="section-how">
+  <p class="eyebrow">{{ section.settings.eyebrow | default: 'HOW IT WORKS' }}</p>
+  <h2 class="section-how__heading">{{ section.settings.heading | default: 'Three steps. No gatekeeping.' }}</h2>
+
+  <div class="section-how__grid">
+    {%- for block in section.blocks -%}
+      <div class="section-how__item" {{ block.shopify_attributes }}>
+        <div class="section-how__num">{{ block.settings.number }}</div>
+        <div class="section-how__title">{{ block.settings.title }}</div>
+        <div class="section-how__desc">{{ block.settings.description }}</div>
+      </div>
+    {%- else -%}
+      {%- assign steps = '01,JOIN,Sign up through the GoAffPro portal in minutes. No joining fee. No exclusivity.|02,ADVERTISE,Share your unique tracking link and discount code with your audience. Your followers save 10%.|03,EARN MONEY,Earn 15% commission on every sale through your link. Paid monthly by bank transfer. No invoices. No faff.' | split: '|' -%}
+      {%- for step in steps -%}
+        {%- assign parts = step | split: ',' -%}
+        <div class="section-how__item">
+          <div class="section-how__num">{{ parts[0] }}</div>
+          <div class="section-how__title">{{ parts[1] }}</div>
+          <div class="section-how__desc">{{ parts[2] }}</div>
+        </div>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "How It Works",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "HOW IT WORKS" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Four steps. No gatekeeping." }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number", "default": "01" },
+        { "type": "text", "id": "title", "label": "Title", "default": "APPLY" },
+        { "type": "textarea", "id": "description", "label": "Description" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "How It Works" }
+  ]
+}
+{% endschema %}

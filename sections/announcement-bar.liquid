@@ -1,0 +1,29 @@
+{%- if section.settings.show_bar != false -%}
+  {%- assign msgs = section.settings.messages | split: '|' -%}
+  {%- if msgs.size > 0 -%}
+    <div class="announcement-bar" role="region" aria-label="Store announcements">
+      <div class="announcement-bar__track">
+        {%- for i in (1..2) -%}
+          {%- for msg in msgs -%}
+            <span class="announcement-bar__item">{{ msg | strip }}</span>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    { "type": "checkbox", "id": "show_bar", "label": "Show announcement bar", "default": true },
+    {
+      "type": "textarea",
+      "id": "messages",
+      "label": "Messages (separate with | )",
+      "default": "FREE UK SHIPPING OVER £50|30-DAY EASY RETURNS|40% CRASH REPLACEMENT|RIDER-OWNED"
+    }
+  ]
+}
+{% endschema %}

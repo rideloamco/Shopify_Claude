@@ -1,0 +1,44 @@
+<div class="collection-page">
+  {% render 'breadcrumbs' %}
+  <div class="collection-page__header">
+    <h1 class="collection-page__title">{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <p class="collection-page__desc" style="color:var(--loam-ash);margin-top:16px;max-width:720px;line-height:1.55">{{ collection.description }}</p>
+    {%- endif -%}
+    <p class="collection-page__count">{{ collection.products_count }} PRODUCTS</p>
+  </div>
+
+  {%- if collection.products.size > 0 -%}
+    <div class="collection-page__grid">
+      {%- for product in collection.products -%}
+        {% render 'product-card', card_product: product %}
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <div style="display:flex;justify-content:center;gap:8px;margin-top:48px">
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+            <a href="{{ part.url }}" style="font-family:var(--font-mono);font-size:13px;padding:10px 16px;border:2px solid var(--loam-charcoal);color:var(--loam-white);text-decoration:none">{{ part.title }}</a>
+          {%- else -%}
+            <span style="font-family:var(--font-mono);font-size:13px;padding:10px 16px;border:2px solid var(--loam-neon);background:var(--loam-neon);color:#0A0A0A">{{ part.title }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    <p style="color:var(--loam-ash);font-family:var(--font-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:80px 0">
+      THIS COLLECTION IS EMPTY — CHECK BACK SOON.
+    </p>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Collection Main",
+  "settings": [],
+  "presets": [
+    { "name": "Collection Main" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,27 @@
+<div class="thankyou">
+  <p class="eyebrow eyebrow--neon">{{ section.settings.eyebrow | default: 'ORDER CONFIRMED' }}</p>
+  <h1 class="thankyou__title">{{ section.settings.heading | default: "Cheers. You're in." }}</h1>
+  <div class="thankyou__body">
+    {%- if section.settings.body != blank -%}
+      {{ section.settings.body }}
+    {%- else -%}
+      <p>Your order's landed and we're on it. You'll get a confirmation email with tracking as soon as it's dispatched. Any questions, just reply to that email — we actually read them.</p>
+    {%- endif -%}
+  </div>
+  <div class="thankyou__actions">
+    <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">KEEP SHOPPING</a>
+    <a href="{{ routes.root_url }}pages/contact" class="btn" style="border:2px solid #FFFFFF;color:#FFFFFF;padding:14px 22px">CONTACT US</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Thank You",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "ORDER CONFIRMED" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Cheers. You're in." },
+    { "type": "richtext", "id": "body", "label": "Body" }
+  ],
+  "presets": [{ "name": "Thank You" }]
+}
+{% endschema %}

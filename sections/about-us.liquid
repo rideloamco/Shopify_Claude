@@ -1,0 +1,38 @@
+{% if section.settings.show_section != false %}
+<section id="about" class="section-about">
+  <div class="section-about__inner">
+    <div>
+      <p class="eyebrow eyebrow--dark">{{ section.settings.eyebrow | default: 'ABOUT US' }}</p>
+      <h2 class="section-about__heading">{{ section.settings.heading | default: 'Born on the trails.' }}</h2>
+    </div>
+    <div class="section-about__body">
+      {% if section.settings.body != blank %}
+        {{ section.settings.body }}
+      {% else %}
+        <p>Loam Co. is kit for people who ride whatever's out the back door, in whatever the weather's doing. Made by riders, tested by riders, priced so you can own more than one.</p>
+        <p>Performs on the climbs. Holds up on the descents. Doesn't look daft in the pub afterwards.</p>
+      {% endif %}
+      <a href="{{ section.settings.button_url | default: routes.root_url | append: 'pages/about' }}" style="font-family:var(--font-narrow);font-weight:700;text-transform:uppercase;letter-spacing:.16em;font-size:12px;padding:12px 18px;border:2px solid #FFFFFF;color:#FFFFFF;background:transparent;text-decoration:none;display:inline-flex;align-items:center;gap:10px;margin-top:8px">
+        {{ section.settings.button_label | default: 'READ OUR STORY' }}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "About Us",
+  "settings": [
+    { "type": "checkbox", "id": "show_section", "label": "Show section", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "ABOUT US" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Born on the trails." },
+    { "type": "richtext", "id": "body", "label": "Body text" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "READ OUR STORY" },
+    { "type": "url", "id": "button_url", "label": "Button URL" }
+  ],
+  "presets": [{ "name": "About Us" }]
+}
+{% endschema %}

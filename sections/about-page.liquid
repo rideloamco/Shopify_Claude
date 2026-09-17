@@ -1,0 +1,94 @@
+<div style="background:#FFFFFF">
+
+  <!-- Hero -->
+  <div style="background:#0A0A0A;padding:clamp(96px,11vw,136px) var(--space-6)">
+    <div style="max-width:900px;margin:0 auto">
+      <p class="eyebrow eyebrow--neon" style="margin-bottom:20px">OUR STORY</p>
+      <h1 style="font-family:var(--font-display);font-size:clamp(64px,10vw,120px);color:#FFFFFF;line-height:.9;letter-spacing:.02em;margin-bottom:32px">
+        Born on<br>the trails.
+      </h1>
+      <p style="font-size:20px;color:#E8E6E1;line-height:1.55;max-width:600px">
+        {{ section.settings.intro | default: "Loam Co. started the way most decent things do — a few riders, a shared complaint, and a batch of kit we had made because nothing on the shelf was quite right." }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Neon marquee break -->
+  <div style="background:var(--loam-neon);padding:18px 0;overflow:hidden;white-space:nowrap">
+    <span style="font-family:var(--font-display);font-size:28px;letter-spacing:.08em;color:#0A0A0A;padding-right:40px">RIDER OWNED · TRAIL TESTED · BUILT FOR THE GRAFT · MADE TO BE WORN OUT · RIDER OWNED · TRAIL TESTED · BUILT FOR THE GRAFT · MADE TO BE WORN OUT ·</span>
+  </div>
+
+  <!-- Story body -->
+  <div style="max-width:800px;margin:0 auto;padding:clamp(96px,11vw,132px) var(--space-6)">
+    <div class="about-prose" style="font-size:16px;line-height:1.7;color:#0A0A0A">
+      {% if section.settings.body != blank %}
+        {{ section.settings.body }}
+      {% else %}
+        <h2 style="font-family:var(--font-display);font-size:clamp(34px,5vw,48px);color:#0A0A0A;margin-bottom:24px;letter-spacing:.02em">Where we came from</h2>
+        <p>We ride the same loops most weeks. Long days when there's time, after-work laps when there isn't. We wanted kit that handled both — technical enough for the descents, comfortable enough to keep on for a pint afterwards.</p>
+        <p>So we made some. Then people started asking where we got it. That's the whole origin story.</p>
+        <p>Every rider has a home trail. Ours isn't more interesting than yours.</p>
+
+        <h2 style="font-family:var(--font-display);font-size:clamp(34px,5vw,48px);color:#0A0A0A;margin:clamp(52px,7vw,74px) 0 24px;letter-spacing:.02em">What we stand for</h2>
+        <p><strong>Made to be worn out.</strong> We make a small number of things and keep making them. No seasonal drops, no colourway that vanishes before you can replace it. Buy the trousers, wear them into the ground, buy the same trousers again.</p>
+        <p><strong>Trail tested.</strong> Nothing goes on the site until it's been properly ridden in. Mud, rain, dust, the lot. If it comes back wrecked, it goes back to the drawing board.</p>
+        <p><strong>Honest pricing.</strong> Priced on what it costs to make well. That's the whole calculation.</p>
+        <p><strong>Sustainability without the sermon.</strong> Recycled fabrics where they don't compromise performance. Plastic-free packaging. We're not going to lecture you about it.</p>
+
+        <h2 style="font-family:var(--font-display);font-size:clamp(34px,5vw,48px);color:#0A0A0A;margin:clamp(52px,7vw,74px) 0 24px;letter-spacing:.02em">Built by riders, run by riders</h2>
+        <p>We're small. Everyone here rides. Every call — fabric weight, cut, colour, price — gets argued over by people who'll be wearing the result that weekend. That's not a marketing line, it's just the only way we know how to do it.</p>
+        <p>Questions, thoughts, or you just want to talk bikes? <a href="/pages/contact" style="color:#0A0A0A;font-weight:700;text-decoration:underline">Get in touch</a>. We actually read the emails.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  {%- if section.settings.team_image != blank -%}
+  <!-- Team photo -->
+  <div style="max-width:1000px;margin:0 auto;padding:0 var(--space-6) clamp(96px,11vw,132px)">
+    <img src="{{ section.settings.team_image | image_url: width: 1600 }}" alt="{{ section.settings.team_image.alt | default: 'The Loam Co. team' | escape }}" loading="lazy" style="width:100%;height:auto;display:block;border:2px solid var(--loam-charcoal)">
+    {%- if section.settings.team_caption != blank -%}
+      <p style="margin-top:14px;font-family:var(--font-narrow);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--loam-ash)">{{ section.settings.team_caption }}</p>
+    {%- endif -%}
+  </div>
+  {%- endif -%}
+
+  <!-- Values strip -->
+  <div style="background:#0A0A0A;padding:clamp(96px,11vw,132px) var(--space-6)">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:clamp(40px,5vw,56px)">
+      <div>
+        <div style="font-family:var(--font-display);font-size:56px;color:var(--loam-neon);line-height:1;margin-bottom:12px">01</div>
+        <div style="font-family:var(--font-narrow);font-weight:700;letter-spacing:.15em;font-size:13px;color:#FFFFFF;margin-bottom:8px">TRAIL TESTED</div>
+        <div style="font-size:14px;color:#E8E6E1;line-height:1.55">Ridden properly before it ships. No exceptions.</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-display);font-size:56px;color:var(--loam-neon);line-height:1;margin-bottom:12px">02</div>
+        <div style="font-family:var(--font-narrow);font-weight:700;letter-spacing:.15em;font-size:13px;color:#FFFFFF;margin-bottom:8px">HONEST PRICING</div>
+        <div style="font-size:14px;color:#E8E6E1;line-height:1.55">Priced on what it costs to make well. Nothing else.</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-display);font-size:56px;color:var(--loam-neon);line-height:1;margin-bottom:12px">03</div>
+        <div style="font-family:var(--font-narrow);font-weight:700;letter-spacing:.15em;font-size:13px;color:#FFFFFF;margin-bottom:8px">RIDER OWNED</div>
+        <div style="font-size:14px;color:#E8E6E1;line-height:1.55">Every decision made by someone who'll be wearing it.</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-display);font-size:56px;color:var(--loam-neon);line-height:1;margin-bottom:12px">04</div>
+        <div style="font-family:var(--font-narrow);font-weight:700;letter-spacing:.15em;font-size:13px;color:#FFFFFF;margin-bottom:8px">PLASTIC FREE</div>
+        <div style="font-size:14px;color:#E8E6E1;line-height:1.55">Recycled where it performs. Packaging you can bin guilt-free.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Our Story",
+  "settings": [
+    { "type": "text", "id": "intro", "label": "Intro paragraph" },
+    { "type": "richtext", "id": "body", "label": "Story body (leave blank for default content)" },
+    { "type": "image_picker", "id": "team_image", "label": "Team photo" },
+    { "type": "text", "id": "team_caption", "label": "Team photo caption" }
+  ],
+  "presets": [{ "name": "Our Story" }]
+}
+{% endschema %}

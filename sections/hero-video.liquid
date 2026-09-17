@@ -1,0 +1,76 @@
+{% if section.settings.show_section != false %}
+<section class="hero-video" aria-label="Hero banner">
+  {% if section.settings.video_url != blank %}
+    <video class="hero-video__bg-img" src="{{ section.settings.video_url }}" autoplay muted loop playsinline aria-hidden="true"></video>
+  {% elsif section.settings.background_image != blank %}
+    <img class="hero-video__bg-img" src="{{ section.settings.background_image | image_url: width: 1920 }}" alt="{{ section.settings.background_image.alt | default: 'Loam Co. mountain bike kit' | escape }}" loading="eager">
+  {% else %}
+    <div class="hero-video__placeholder" aria-hidden="true">
+      <div class="hero-video__play-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#DAEE01"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+      <div class="hero-video__placeholder-text">
+        BANNER VIDEO<br>
+        <span style="color:var(--loam-graphite)">[ ATTACH .MP4 OR IMAGE IN THEME EDITOR ]</span>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="hero-video__scrim" aria-hidden="true"></div>
+
+  <div class="hero-video__stamp">
+    <span class="eyebrow eyebrow--neon">{{ section.settings.stamp | default: 'RIDER OWNED · RIDER RUN' }}</span>
+  </div>
+
+  <div class="hero-video__content">
+    <h1 class="hero-video__headline">{{ section.settings.headline | default: 'Rider-owned mountain bike clothing.' }}</h1>
+    <p class="hero-video__subtext">{{ section.settings.subtext | default: 'Priced like we ride it ourselves, because we do.' }}</p>
+    <div class="hero-video__cta-row">
+      <a href="{{ section.settings.cta_url | default: collections['shop-all'].url | default: routes.all_products_collection_url }}" class="btn btn--primary">{{ section.settings.cta_label | default: 'DISCOVER THE RANGE' }}</a>
+      {% if section.settings.cta2_label != blank %}
+        <a href="{{ section.settings.cta2_url | default: routes.root_url }}" class="btn btn--outline">{{ section.settings.cta2_label }}</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="hero-video__scroll" aria-hidden="true">
+    SCROLL
+    <svg width="14" height="20" viewBox="0 0 24 32" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 2v28M5 23l7 7 7-7"/>
+    </svg>
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "settings": [
+    { "type": "checkbox", "id": "show_section", "label": "Show section", "default": true },
+    { "type": "text", "id": "headline", "label": "Headline (H1)", "default": "Rider-owned mountain bike clothing." },
+    { "type": "textarea", "id": "subtext", "label": "Subtext", "default": "Priced like we ride it ourselves, because we do." },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "DISCOVER THE RANGE" },
+    { "type": "url", "id": "cta_url", "label": "Button link" },
+    { "type": "text", "id": "cta2_label", "label": "Secondary button label (optional)" },
+    { "type": "url", "id": "cta2_url", "label": "Secondary button link" },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video URL (.mp4)",
+      "info": "Upload your video to Files and paste the URL here."
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image (fallback / no video)"
+    },
+    {
+      "type": "text",
+      "id": "stamp",
+      "label": "Stamp text",
+      "default": "RIDER OWNED · RIDER RUN"
+    }
+  ],
+  "presets": [{ "name": "Hero Banner" }]
+}
+{% endschema %}

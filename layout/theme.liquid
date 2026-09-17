@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#FFFFFF">
+
+  {%- liquid
+    if request.page_type == 'article'
+      assign seo_title = article.title | append: ' | ' | append: shop.name
+      assign seo_desc = article.excerpt_or_content | strip_html | strip_newlines | truncate: 160
+      assign seo_image = article.image | image_url: width: 1200
+    elsif request.page_type == 'blog'
+      assign seo_title = blog.title | append: ' | ' | append: shop.name
+      assign seo_desc = blog.description | default: shop.description
+      assign seo_image = settings.share_image | image_url: width: 1200
+    elsif request.page_type == 'product'
+      assign seo_title = product.title | append: ' | ' | append: shop.name
+      assign seo_desc = product.description | strip_html | truncate: 160
+      assign seo_image = product.featured_image | image_url: width: 1200
+    elsif request.page_type == 'collection'
+      assign seo_title = collection.title | append: ' | ' | append: shop.name
+      assign seo_desc = collection.description | strip_html | default: shop.description | truncate: 160
+      assign seo_image = collection.image | image_url: width: 1200
+    elsif request.page_type == 'index'
+      assign seo_title = shop.name | append: ' | Mountain Bike Clothing & Ride Wear'
+      assign seo_desc = shop.description | default: 'Rider-owned mountain bike clothing. Trail-tested MTB jerseys, tees and ride wear, made to be worn out. Free UK delivery over £50. 40% crash replacement.'
+      assign seo_image = settings.share_image | image_url: width: 1200
+    else
+      assign seo_title = page_title | append: ' | ' | append: shop.name
+      assign seo_desc = page_description | default: shop.description
+      assign seo_image = settings.share_image | image_url: width: 1200
+    endif
+  -%}
+
+  <title>{{ seo_title }}</title>
+  <meta name="description" content="{{ seo_desc | escape }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="{{ shop.name }}">
+  <meta property="og:title" content="{{ seo_title | escape }}">
+  <meta property="og:description" content="{{ seo_desc | escape }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:locale" content="en_GB">
+  {% if request.page_type == 'article' %}
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}">
+    <meta property="article:author" content="{{ article.author }}">
+  {% elsif request.page_type == 'product' %}
+    <meta property="og:type" content="product">
+    <meta property="product:price:amount" content="{{ product.price | money_without_currency | remove: ',' }}">
+    <meta property="product:price:currency" content="{{ cart.currency.iso_code }}">
+  {% else %}
+    <meta property="og:type" content="website">
+  {% endif %}
+  {% if seo_image != blank %}
+    <meta property="og:image" content="{{ seo_image }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="1200">
+  {% endif %}
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ seo_title | escape }}">
+  <meta name="twitter:description" content="{{ seo_desc | escape }}">
+  {% if seo_image != blank %}
+    <meta name="twitter:image" content="{{ seo_image }}">
+  {% endif %}
+
+  <!-- Organisation schema (all pages) -->
+  {%- liquid
+    assign social_links = ''
+    if settings.social_instagram_link != blank
+      assign social_links = social_links | append: settings.social_instagram_link | append: ','
+    endif
+    if settings.social_tiktok_link != blank
+      assign social_links = social_links | append: settings.social_tiktok_link | append: ','
+    endif
+    if settings.social_youtube_link != blank
+      assign social_links = social_links | append: settings.social_youtube_link | append: ','
+    endif
+    assign social_array = social_links | split: ','
+  -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }},
+    "logo": "{{ 'loam-logo.png' | asset_url }}",
+    "description": "Rider-owned mountain bike clothing brand. Trail-tested MTB jerseys, tees and ride wear, made to be worn out.",
+    "email": "ride.loamco@gmail.com"{% if social_array.size > 0 %},
+    "sameAs": {{ social_array | json }}{% endif %}
+  }
+  </script>
+
+  {%- if settings.biz_address != blank -%}
+  <!-- LocalBusiness schema (only when an address is set) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": {{ settings.biz_name | default: shop.name | json }},
+    "url": {{ shop.url | json }},
+    "email": {{ settings.biz_email | default: 'ride.loamco@gmail.com' | json }},
+    {% if settings.biz_phone != blank %}"telephone": {{ settings.biz_phone | json }},{% endif %}
+    {% if settings.share_image != blank %}"image": "{{ settings.share_image | image_url: width: 1200 }}",{% endif %}
+    "address": { "@type": "PostalAddress", "streetAddress": {{ settings.biz_address | strip_newlines | json }} }
+  }
+  </script>
+  {%- endif -%}
+
+  <!-- WebSite schema with sitelinks search -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }},
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "{{ shop.url }}/search?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  {% if request.page_type == 'product' %}
+  <!-- Product schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "url": "{{ shop.url }}{{ product.url }}",
+    "description": {{ product.description | strip_html | truncate: 300 | json }},
+    "sku": {{ product.selected_or_first_available_variant.sku | default: product.id | json }},
+    "brand": { "@type": "Brand", "name": {{ shop.name | json }} },
+    {% if product.featured_image %}"image": "{{ product.featured_image | image_url: width: 1200 }}",{% endif %}
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "lowPrice": "{{ product.price_min | money_without_currency | remove: ',' }}",
+      "highPrice": "{{ product.price_max | money_without_currency | remove: ',' }}",
+      "offerCount": {{ product.variants.size }},
+      "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+      "url": "{{ shop.url }}{{ product.url }}"
+    }
+  }
+  </script>
+
+  <!-- Breadcrumb schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ shop.url | json }} },
+      {% if collection %}{ "@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": "{{ shop.url }}{{ collection.url }}" },
+      { "@type": "ListItem", "position": 3, "name": {{ product.title | json }}, "item": "{{ shop.url }}{{ product.url }}" }
+      {% else %}{ "@type": "ListItem", "position": 2, "name": {{ product.title | json }}, "item": "{{ shop.url }}{{ product.url }}" }{% endif %}
+    ]
+  }
+  </script>
+  {% elsif request.page_type == 'collection' %}
+  <!-- Breadcrumb schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ shop.url | json }} },
+      { "@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": "{{ shop.url }}{{ collection.url }}" }
+    ]
+  }
+  </script>
+  {% elsif request.page_type == 'article' %}
+  <!-- Article schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ article.title | json }},
+    "url": "{{ shop.url }}{{ article.url }}",
+    "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+    "dateModified": "{{ article.updated_at | default: article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+    "author": { "@type": "Person", "name": {{ article.author | json }} },
+    "publisher": { "@type": "Organization", "name": {{ shop.name | json }}, "url": {{ shop.url | json }} },
+    {% if article.image %}"image": "{{ article.image | image_url: width: 1200 }}",{% endif %}
+    "description": {{ article.excerpt_or_content | strip_html | strip_newlines | truncate: 300 | json }}
+  }
+  </script>
+  {% endif %}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo+Narrow:wght@400;500;600;700&family=Archivo:wght@400;500&display=swap" rel="stylesheet">
+
+  {%- if settings.ga_measurement_id != blank -%}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ settings.ga_measurement_id }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', {{ settings.ga_measurement_id | json }});
+    </script>
+  {%- endif -%}
+
+  {%- if settings.meta_pixel_id != blank -%}
+    <!-- Meta Pixel -->
+    <script>
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', {{ settings.meta_pixel_id | json }});
+      fbq('track', 'PageView');
+      {%- if request.page_type == 'product' -%}
+      fbq('track', 'ViewContent', {
+        content_ids: [{{ product.selected_or_first_available_variant.id | json }}],
+        content_name: {{ product.title | json }},
+        content_type: 'product',
+        value: {{ product.price | divided_by: 100.0 }},
+        currency: {{ cart.currency.iso_code | json }}
+      });
+      {%- endif -%}
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id={{ settings.meta_pixel_id }}&ev=PageView&noscript=1" alt=""></noscript>
+  {%- endif -%}
+
+  {{ content_for_header }}
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+</head>
+<body>
+  {% section 'announcement-bar' %}
+  {% section 'header' %}
+  <main id="main-content" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+  {% section 'footer' %}
+  {% render 'cart-drawer' %}
+  <script src="{{ 'loam.js' | asset_url }}" defer></script>
+</body>
+</html>

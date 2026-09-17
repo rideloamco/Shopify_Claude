@@ -1,0 +1,55 @@
+<div class="case-studies">
+  <div class="case-studies__head">
+    <p class="eyebrow">{{ section.settings.eyebrow | default: 'RIDER STORIES' }}</p>
+    <h1 class="case-studies__title">{{ section.settings.heading | default: 'From the people who ride it.' }}</h1>
+    {%- if section.settings.intro != blank -%}<p class="case-studies__intro">{{ section.settings.intro }}</p>{%- endif -%}
+  </div>
+
+  <div class="case-studies__list">
+    {%- for block in section.blocks -%}
+      <div class="case-study" {{ block.shopify_attributes }}>
+        <div class="case-study__media">
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 900 }}" alt="{{ block.settings.image.alt | default: block.settings.name | escape }}" loading="lazy">
+          {%- else -%}
+            <div class="case-study__placeholder">{{ block.settings.name | default: 'RIDER' | upcase }}</div>
+          {%- endif -%}
+        </div>
+        <div class="case-study__body">
+          {%- if block.settings.tag != blank -%}<p class="case-study__tag">{{ block.settings.tag }}</p>{%- endif -%}
+          <h2 class="case-study__name">{{ block.settings.name }}</h2>
+          <div class="case-study__quote">{{ block.settings.quote }}</div>
+          {%- if block.settings.link != blank and block.settings.link_label != blank -%}
+            <a href="{{ block.settings.link }}" class="btn btn--outline" style="margin-top:22px">{{ block.settings.link_label }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Rider Stories",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "RIDER STORIES" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "From the people who ride it." },
+    { "type": "textarea", "id": "intro", "label": "Intro" }
+  ],
+  "blocks": [
+    {
+      "type": "story",
+      "name": "Story",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "text", "id": "tag", "label": "Tag", "default": "TRAIL RIDER" },
+        { "type": "text", "id": "name", "label": "Name / title", "default": "Sam · Home trails" },
+        { "type": "richtext", "id": "quote", "label": "Story / quote", "default": "<p>Put a rider's story here — what they ride, how the kit's held up, why they keep coming back.</p>" },
+        { "type": "url", "id": "link", "label": "Link (optional)" },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "SHOP THEIR KIT" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Rider Stories", "blocks": [ { "type": "story" }, { "type": "story" }, { "type": "story" } ] }]
+}
+{% endschema %}
